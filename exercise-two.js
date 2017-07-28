@@ -159,18 +159,30 @@ function problemC () {
   //     console.log("All done");
   //   });
 
-  Promise.reduce(filenames,
-            function(total, singleFile){
-              return promisifiedReadFile(singleFile)
-                .then(function(stanza){
-                  blue(stanza);
-                  return total + 1;
-                });
-            }, 0
-  )
-  .then(function(total){
-    console.log('All done');
-  });
+  // Promise.reduce(filenames,
+  //           function(total, singleFile){
+  //             return promisifiedReadFile(singleFile)
+  //               .then(function(stanza){
+  //                 blue(stanza);
+  //                 return total + 1;
+  //               });
+  //           }, 0
+  // )
+  // .then(function(total){
+  //   console.log('All done');
+  // });
+
+// Using promise.all
+var promises = [];
+for (var i = 0; i < filenames.length; ++i) {
+    promises.push(promisifiedReadFile(filenames[i]));
+}
+// console.log(promises);
+
+Promise.all(promises).then(function(result) {
+  result.forEach(function(stanza){ blue(stanza)});
+  console.log('All done');
+});
 
 }
 
