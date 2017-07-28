@@ -235,5 +235,30 @@ function problemE () {
   var fs = require('fs');
   function promisifiedWriteFile (filename, str) {
     // your code here
+    return new Promise(function(resolve, reject){
+      fs.writeFile(filename, str, function(err){
+        if(err) reject(err);
+        else resolve(filename);
+      });
+    });
   }
+
+  // Bad write
+  // Requires a nowrite.txt that has no writing rights
+  promisifiedWriteFile('nowrite.txt', 'blah')
+    .then(function(filename){
+      console.log(`${filename} is modifided`);
+    })
+    .catch(function(err){
+      magenta(err);
+    });
+
+  // Good write
+  promisifiedWriteFile('1.txt', 'Adding to 1.txt\n')
+    .then(function(filename){
+      console.log(`${filename} is modifided`);
+    })
+    .catch(function(err){
+      magenta(err);
+    });
 }
