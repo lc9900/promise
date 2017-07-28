@@ -204,7 +204,7 @@ function problemF () {
   promisifiedReadFile('poem-one/stanza-03.txt')
     .then(function(stanza){
       blue(stanza);
-      console.log('done');
+      // console.log('done');
       return promisifiedReadFile('poem-one/wrong-file-name.txt');
     })
     .then(function(stanza){
